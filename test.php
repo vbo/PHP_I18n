@@ -1,5 +1,6 @@
 <?php
 ini_set('display_errors', true);
+ini_set('errors_reporting', E_ALL);
 require_once 'lib/config.php';
 require_once 'PHP/I18n.php';
 require_once 'PHP/I18n/Dic/IniFile.php';
