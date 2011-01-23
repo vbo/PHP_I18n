@@ -1,19 +1,19 @@
 <?php
 
-class PHP_I18n_Processor
+class PHP_I18n_Formatter
 {
     private $_str;
     private $_args;
-    private $_backend;
+    private $_dic;
     
-    public function __construct($str, $args, PHP_I18n_Backend $backend)
+    public function __construct($str, $args, PHP_I18n_Dic_Abstract $dic)
     {
         $this->_str = $str;
         $this->_args = $args;
-        $this->_backend = $backend;
+        $this->_dic = $dic;
     }
 
-    public function expandPlaceholders()
+    public function format()
     {
         $result = $this->_str;
         if ($this->_args) {
@@ -46,9 +46,9 @@ class PHP_I18n_Processor
 
     private function _processDecl($param)
     {
-        $forms = explode('|', $this->_backend->get($param[1]));
+        $forms = explode('|', $this->_dic->get($param[1]));
         require_once 'Text/Declension/Factory.php';
-        $declension = Text_Declension_Factory::get($this->_backend->getLangId());
+        $declension = Text_Declension_Factory::get($this->_dic->getLangId());
         return $declension->process($param[0], $forms);
     }
 

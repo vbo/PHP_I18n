@@ -2,19 +2,23 @@
 ini_set('display_errors', true);
 require_once 'lib/config.php';
 require_once 'PHP/I18n.php';
-require_once 'PHP/I18n/Backend/IniFile.php';
+require_once 'PHP/I18n/Dic/IniFile.php';
 
-$dicRu = new PHP_I18n(new PHP_I18n_Backend_IniFile('russian', dirname(__FILE__) . '/misc'));
-$dicEng = new PHP_I18n(new PHP_I18n_Backend_IniFile('english', dirname(__FILE__) . '/misc'));
-
-echo $dicRu->get('hello');
-echo @$dicRu->get('hello1');
-echo $dicRu->get('dectest', array(
-    'item' => array(1, 'banan'),
+echo tr('hello'), "\n";
+echo tr('dectest', array(
+    'item' => array(2, 'banan'),
     'sum' => array(30, 'rub')
 ));
+echo "\n";
 
-echo $dicEng->get('dectest', array(
-    'item' => array(1, 'banan'),
-    'sum' => array(30, 'rub')
-));
+function tr($id, $args=null)
+{
+    static $dic;
+    if ($dic === null) {
+        $lang = 'russian';
+        if (@$_GET['lang']) $lang = $_GET['lang'];
+        $storage = new PHP_I18n_Dic_IniFile($lang, dirname(__FILE__) . '/misc');
+        $dic = new PHP_I18n($storage);
+    }
+    return $dic->translate($id, $args);
+}

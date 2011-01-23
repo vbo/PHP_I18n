@@ -1,8 +1,6 @@
 <?php
 
-require_once 'PHP/I18n/Backend.php';
-
-class PHP_I18n_Backend_IniFile extends PHP_I18n_Backend
+class PHP_I18n_Dic_IniFile extends PHP_I18n_Dic_Abstract
 {
     private $_langId;
     private $_dic;
@@ -25,7 +23,7 @@ class PHP_I18n_Backend_IniFile extends PHP_I18n_Backend
         if (!array_key_exists($literalId, $this->_dic) && error_reporting()) {
             throw new PHP_I18n_Backend_IniFileException('No such literal ' . $literalId);
         }
-        return $this->_dic[$literalId];
+        return @$this->_dic[$literalId];
     }
 
     public function getLangId()

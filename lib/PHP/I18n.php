@@ -1,20 +1,21 @@
 <?php
 
 require_once 'PHP/I18n/Processor.php';
+require_once 'PHP/I18n/Dic/Abstract.php';
 
 class PHP_I18n
 {
-    private $_backend;
+    private $_dic;
 
-    public function __construct(PHP_I18n_Backend $backend)
+    public function __construct(PHP_I18n_Dic_Abstract $dic)
     {
-        $this->_backend = $backend;
+        $this->_dic = $dic;
     }
 
-    public function get($literalId, $args=null)
+    public function translate($literalId, $args=null)
     {
-        $origin = $this->_backend->get($literalId);
-        $processor = new PHP_I18n_Processor($origin, $args, $this->_backend);
-        return $processor->expandPlaceholders();
+        $origin = $this->_dic->get($literalId);
+        $processor = new PHP_I18n_Formatter($origin, $args, $this->_dic);
+        return $processor->format();
     }
 }
