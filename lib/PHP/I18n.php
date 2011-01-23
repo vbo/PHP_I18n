@@ -15,7 +15,7 @@ class PHP_I18n
     public static function get($literalId, $args=null)
     {
         $origin = self::$_backend->get($literalId);
-        $processor = new PHP_I18n_Processor($origin, $args);
+        $processor = new PHP_I18n_Processor($origin, $args, self::$_backend);
         return $processor->expandPlaceholders();
     }   
 

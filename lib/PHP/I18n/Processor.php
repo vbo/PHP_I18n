@@ -4,11 +4,13 @@ class PHP_I18n_Processor
 {
     private $_str;
     private $_args;
+    private $_backend;
     
-    public function __construct($str, $args)
+    public function __construct($str, $args, PHP_I18n_Backend $backend)
     {
         $this->_str = $str;
         $this->_args = $args;
+        $this->_backend = $backend;
     }
 
     public function expandPlaceholders()
@@ -44,7 +46,10 @@ class PHP_I18n_Processor
 
     private function _processDecl($param)
     {
-        return 'TODO';
+        $forms = explode('|', $this->_backend->get($param[1]));
+        require_once 'Text/Declension/Factory.php';
+        $declension = Text_Declension_Factory::get($this->_backend->getLangId());
+        return $declension->process($param[0], $forms);
     }
 
     private function _cutProcessorName($str)
