@@ -4,21 +4,17 @@ require_once 'PHP/I18n/Processor.php';
 
 class PHP_I18n
 {
-    private static $_backend;
-    private static $_args;
+    private $_backend;
 
-    public static function init(PHP_I18n_Backend $backend)
+    public function __construct(PHP_I18n_Backend $backend)
     {
-        self::$_backend = $backend;
+        $this->_backend = $backend;
     }
 
-    public static function get($literalId, $args=null)
+    public function get($literalId, $args=null)
     {
-        $origin = self::$_backend->get($literalId);
-        $processor = new PHP_I18n_Processor($origin, $args, self::$_backend);
+        $origin = $this->_backend->get($literalId);
+        $processor = new PHP_I18n_Processor($origin, $args, $this->_backend);
         return $processor->expandPlaceholders();
-    }   
-
-    private function __construct() {}
-    private function __clone() {}
+    }
 }
