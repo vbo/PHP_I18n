@@ -4,16 +4,16 @@ require_once 'PHP/I18n/Backend.php';
 
 class PHP_I18n_Backend_IniFile extends PHP_I18n_Backend
 {
-    private $_langName;
+    private $_langId;
     private $_dic;
     private $_workDir;
 
     public function __construct($langName, $workDir)
     {
-        $this->_langName = $langName;
+        $this->_langId = $langName;
         $this->_workDir = $workDir[strlen($workDir) - 1] == '/' ? $workDir : $workDir . '/';
 
-        $dicFname = $this->_workDir . $this->_langName . '.ini';
+        $dicFname = $this->_workDir . $this->_langId . '.ini';
         if (!file_exists($dicFname)) {
             throw new PHP_I18n_Backend_IniFileException('No such file ' . $dicFname);
         }
@@ -26,6 +26,11 @@ class PHP_I18n_Backend_IniFile extends PHP_I18n_Backend
             throw new PHP_I18n_Backend_IniFileException('No such literal ' . $literalId);
         }
         return $this->_dic[$literalId];
+    }
+
+    public function getLangId()
+    {
+        return $this->_langId;
     }
 }
 
