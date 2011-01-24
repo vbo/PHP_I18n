@@ -1,6 +1,6 @@
 <?php
 
-require_once 'PHP/I18n/Processor.php';
+require_once 'PHP/I18n/Formatter.php';
 require_once 'PHP/I18n/Dic/Abstract.php';
 
 class PHP_I18n
