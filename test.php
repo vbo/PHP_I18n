@@ -18,8 +18,7 @@ function tr($id, $args=null)
     if ($dic === null) {
         $lang = 'russian';
         if (@$_GET['lang']) $lang = $_GET['lang'];
-        $dic = new Struct_Dic_IniFile($lang, dirname(__FILE__) . '/misc');
-        $dic = new PHP_I18n($dic);
+        $dic = new PHP_I18n(new Struct_Dic_IniFile($lang, dirname(__FILE__) . '/misc'));
     }
     return $dic->translate($id, $args);
 }

@@ -6,7 +6,7 @@ class Text_Formatter
     private $_args;
     private $_dic;
     
-    public function __construct($str, $args, $dic)
+    public function __construct($str, $args, Struct_Dic_Abstract $dic)
     {
         $this->_str = $str;
         $this->_args = $args;
@@ -46,14 +46,9 @@ class Text_Formatter
 
     private function _processDecl($param)
     {
-        if (is_array($this->_dic)) {
-            $forms = $this->_dic[$param[1]];
-        } else {
-            $forms = $this->_dic->get($param[1]);
-        }
-        $forms = explode('|', $forms);
+        $forms = explode('|', $this->_dic->get($param[1]));
         require_once 'Text/Declension/Factory.php';
-        $declension = Text_Declension_Factory::get($this->_dic->getLangId());
+        $declension = Text_Declension_Factory::get($this->_dic->getDicLang());
         return $declension->process($param[0], $forms);
     }
 
