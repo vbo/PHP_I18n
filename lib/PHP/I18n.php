@@ -1,13 +1,12 @@
 <?php
 
-require_once 'PHP/I18n/Formatter.php';
-require_once 'PHP/I18n/Dic/Abstract.php';
+require_once 'Text/Formatter.php';
 
 class PHP_I18n
 {
     private $_dic;
 
-    public function __construct(PHP_I18n_Dic_Abstract $dic)
+    public function __construct(Struct_Dic_Abstract $dic)
     {
         $this->_dic = $dic;
     }
@@ -15,7 +14,7 @@ class PHP_I18n
     public function translate($literalId, $args=null)
     {
         $origin = $this->_dic->get($literalId);
-        $processor = new PHP_I18n_Formatter($origin, $args, $this->_dic);
+        $processor = new Text_Formatter($origin, $args, $this->_dic);
         return $processor->format();
     }
 }

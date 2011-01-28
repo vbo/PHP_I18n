@@ -1,6 +1,8 @@
 <?php
 
-class PHP_I18n_Dic_IniFile extends PHP_I18n_Dic_Abstract
+require_once 'Struct/Dic/Abstract.php';
+
+class Struct_Dic_IniFile extends Struct_Dic_Abstract
 {
     private $_langId;
     private $_dic;

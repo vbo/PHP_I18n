@@ -1,12 +1,12 @@
 <?php
 
-class PHP_I18n_Formatter
+class Text_Formatter
 {
     private $_str;
     private $_args;
     private $_dic;
     
-    public function __construct($str, $args, PHP_I18n_Dic_Abstract $dic)
+    public function __construct($str, $args, $dic)
     {
         $this->_str = $str;
         $this->_args = $args;
@@ -46,7 +46,12 @@ class PHP_I18n_Formatter
 
     private function _processDecl($param)
     {
-        $forms = explode('|', $this->_dic->get($param[1]));
+        if (is_array($this->_dic)) {
+            $forms = $this->_dic[$param[1]];
+        } else {
+            $forms = $this->_dic->get($param[1]);
+        }
+        $forms = explode('|', $forms);
         require_once 'Text/Declension/Factory.php';
         $declension = Text_Declension_Factory::get($this->_dic->getLangId());
         return $declension->process($param[0], $forms);
